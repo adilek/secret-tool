@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Secret tool",
+  "description": "This extension is for making the data collection easy. It is for my experimental research. Nothing secret actually",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "res/smile-happy.png"
+  },
+  "background": {
+    "scripts": ["main.js"]
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus"
+  ]
+}
