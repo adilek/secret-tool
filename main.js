@@ -13,9 +13,11 @@ new Menu(function (data) {
     newItem.url = data.tab.url;
     newItem.text = data.info.selectionText;
 
-    //db.insert(newItem.url, newItem);
-    alert(JSON.stringify(newItem, null, 4));
+    db.insert(newItem.url, newItem);
 
-    // TODO:
-    chrome.browserAction.setBadgeText({text: "1"});
+    let badgeText = localStorage.length + "";
+
+    chrome.browserAction.setBadgeText({
+        text: badgeText
+    });
 });
