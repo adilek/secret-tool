@@ -6,12 +6,15 @@
 /* jshint esversion: 6*/
 
 class Menu {
-    constructor() {
+
+    constructor(callback) {
         this.context = "selection";
+        this.callback = callback;
         this.createMenus();
     }
 
     createMenus() {
+        const _this = this;
         const parent = chrome.contextMenus.create({
             "title": "Secret tool",
             "contexts": [this.context]
@@ -21,7 +24,9 @@ class Menu {
             "title": "Happy",
             "id": "good",
             "parentId": parent,
-            "onclick": this.onClick,
+            "onclick": function (info, tab) {
+                _this.onClick(info, tab);
+            },
             "contexts": [this.context]
         });
 
@@ -29,22 +34,18 @@ class Menu {
             "title": "Sad",
             "id": "sad",
             "parentId": parent,
-            "onclick": this.onClick,
+            "onclick": function (info, tab) {
+                _this.onClick(info, tab);
+            },
             "contexts": [this.context]
         });
 
     }
 
     onClick(info, tab) {
-        let newItem = {};
-        newItem.type = info.menuItemId;
-        newItem.url = tab.url;
-        newItem.text = info.selectionText;
-
-        //db.insert(newItem.url, newItem);
-        alert(JSON.stringify(newItem, null, 4));
-
-        // TODO:
-        chrome.browserAction.setBadgeText({text: "1"});
+        let data = {};
+        data.info = info;
+        data.tab = tab;
+        this.callback(data);
     }
 }
