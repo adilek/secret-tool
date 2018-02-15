@@ -18,6 +18,10 @@ class DB {
         this.db.clear();
     }
 
+    size() {
+        return this.db.length;
+    }
+
     deleteItem(key) {
         this.db.removeItem(key);
     }
@@ -30,4 +34,16 @@ class DB {
             }
         }
     }
+
+    readAll(callback) {
+        if (callback) {
+            let dataObj = [];
+            for (let i = 0; i < this.db.length; i++) {
+                let key = this.db.key(i);
+                dataObj.push(JSON.parse(this.db.getItem(key)));
+            }
+            callback(dataObj);
+        }
+    }
+
 }

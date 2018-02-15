@@ -55,6 +55,7 @@ function addDeleteEvent(id, key) {
 function deleteRow(id) {
     let row = document.getElementById("delete-" + id).parentNode.parentNode;
     row.parentNode.removeChild(row);
+    document.getElementById("btn-download").innerText = "Download (" + db.size() + ")";
 }
 
 function loadData() {
@@ -66,9 +67,34 @@ function loadData() {
         tbody.appendChild(makeRow(i + 1, data.url, data.text, data.type));
         addDeleteEvent(i + 1, data.url);
     });
+
+    document.getElementById("btn-download").innerText = "Download (" + db.size() + ")";
+}
+
+function generateFileName() {
+    let date = new Date();
+
+    let month = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+    let str = date.getFullYear() + "-" + month[date.getMonth()] + "-" + date.getDate();
+    str += "_" + date.getHours() + "-" + date.getMinutes();
+
+    return str + ".json";
+}
+
+function downloadFile(data) {
+    let fileBlob = new Blob([data], {type: 'text/json'});
+
+    let tempA = document.createElement("a");
+    tempA.download = generateFileName();
+    tempA.href = window.webkitURL.createObjectURL(fileBlob);
+    tempA.click();
 }
 
 function downloadData() {
+    db.readAll(function (data) {
+        downloadFile(JSON.stringify(data));
+    })
 
 }
 
@@ -85,3 +111,9 @@ document.getElementById("btn-clean").onclick = function () {
 document.getElementById("btn-load").onclick = function () {
     loadData();
 };
+
+document.getElementById("btn-download").onclick = function () {
+    downloadData();
+};
+
+document.getElementById("btn-download").innerText += " (" + db.size() + ")";
