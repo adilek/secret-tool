@@ -92,6 +92,10 @@ function downloadFile(data) {
 }
 
 function downloadData() {
+    if (db.size() === 0) {
+        alert("No data.");
+        return;
+    }
     db.readAll(function (data) {
         downloadFile(JSON.stringify(data));
     })
@@ -101,6 +105,9 @@ function downloadData() {
 function cleanData() {
     if (confirm("Do you want to delete?")) {
         db.clear();
+        let tbody = document.getElementById("tbl-rows");
+        tbody.innerHTML = "";
+        document.getElementById("btn-download").innerText = "Download (" + db.size() + ")";
     }
 }
 
