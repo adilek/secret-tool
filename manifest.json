@@ -10,7 +10,8 @@
   "background": {
     "scripts": [
       "db.js",
-      "menu.js"
+      "menu.js",
+      "main.js"
     ]
   },
   "permissions": [
