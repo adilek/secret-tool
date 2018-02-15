@@ -18,6 +18,10 @@ class DB {
         this.db.clear();
     }
 
+    deleteItem(key) {
+        this.db.removeItem(key);
+    }
+
     readData(callback) {
         if (callback) {
             for (let i = 0; i < this.db.length; i++) {
