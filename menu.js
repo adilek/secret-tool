@@ -1,6 +1,5 @@
 /**
  * @author Adil Aliyev <adilaliev@gmail.com>
- * @type {string}
  */
 
 'use strict';
@@ -42,11 +41,10 @@ class Menu {
         newItem.url = tab.url;
         newItem.text = info.selectionText;
 
+        //db.insert(newItem.url, newItem);
         alert(JSON.stringify(newItem, null, 4));
 
         // TODO:
         chrome.browserAction.setBadgeText({text: "1"});
     }
 }
-
-new Menu();
