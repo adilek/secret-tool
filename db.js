@@ -13,4 +13,17 @@ class DB {
     insert(key, value) {
         this.db.setItem(key, value);
     }
+
+    clear() {
+        this.db.clear();
+    }
+
+    readData(callback) {
+        if (callback) {
+            for (let i = 0; i < this.db.length; i++) {
+                let key = this.db.key(i);
+                callback(i, this.db.getItem(key));
+            }
+        }
+    }
 }

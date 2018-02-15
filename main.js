@@ -13,7 +13,7 @@ new Menu(function (data) {
     newItem.url = data.tab.url;
     newItem.text = data.info.selectionText;
 
-    db.insert(newItem.url, newItem);
+    db.insert(newItem.url, JSON.stringify(newItem));
 
     let badgeText = localStorage.length + "";
 
