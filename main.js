@@ -1,31 +1,52 @@
-var context = "selection"
+/**
+ * @author Adil Aliyev <adilaliev@gmail.com>
+ * @type {string}
+ */
 
-var parent = chrome.contextMenus.create({"title": "Secret tool", "contexts": [context]});
+'use strict';
+/* jshint esversion: 6*/
 
-var menuGood = chrome.contextMenus.create({
-    "title": "Happy",
-    "id": "good",
-    "parentId": parent,
-    "onclick": genericOnClick,
-    "contexts": [context]
-});
+class Menu {
+    constructor() {
+        this.context = "selection";
+        this.createMenus();
+    }
 
-var menuBad = chrome.contextMenus.create({
-    "title": "Sad",
-    "id": "sad",
-    "parentId": parent,
-    "onclick": genericOnClick,
-    "contexts": [context]
-});
+    createMenus() {
+        const parent = chrome.contextMenus.create({
+            "title": "Secret tool",
+            "contexts": [this.context]
+        });
 
-function genericOnClick(info, tab) {
-    var newItem = {};
-    newItem.type = info.menuItemId;
-    newItem.url = tab.url;
-    newItem.text = info.selectionText;
+        chrome.contextMenus.create({
+            "title": "Happy",
+            "id": "good",
+            "parentId": parent,
+            "onclick": this.onClick,
+            "contexts": [this.context]
+        });
 
-    alert(JSON.stringify(newItem, null, 4));
+        chrome.contextMenus.create({
+            "title": "Sad",
+            "id": "sad",
+            "parentId": parent,
+            "onclick": this.onClick,
+            "contexts": [this.context]
+        });
 
-    // TODO:
-    chrome.browserAction.setBadgeText({text: "1"});
+    }
+
+    onClick(info, tab) {
+        let newItem = {};
+        newItem.type = info.menuItemId;
+        newItem.url = tab.url;
+        newItem.text = info.selectionText;
+
+        alert(JSON.stringify(newItem, null, 4));
+
+        // TODO:
+        chrome.browserAction.setBadgeText({text: "1"});
+    }
 }
+
+new Menu();
